@@ -1,116 +1,81 @@
 function Box1 () {
-    Go_Start()
-    Line_Follow()
-    Turn_Right()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Right()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Right()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Servo_kick()
+    Go_Startobstacle()
+    Line_right()
+    Line_right()
+    Line_right()
+    Line_left()
+    Line_box()
 }
 function Line_Follow () {
     Loop = true
     Read()
     while (Loop) {
         if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Forward, Speed)
+            MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
         } else if (MySensor.analogRead(MySensor.analogPort.P0) < Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
             MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(480)
+            basic.pause(450)
             MyRobotBit.RotateNOTIME(Turn.Right, Slow_speed)
-            basic.pause(110)
+            basic.pause(70)
         } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) < Read_P3)) {
             MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(480)
+            basic.pause(450)
             MyRobotBit.RotateNOTIME(Turn.Left, Slow_speed)
-            basic.pause(110)
+            basic.pause(70)
         } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
             Loop = false
-            MyRobotBit.Rotate(Turn.Left, Slow_speed, Read_ms)
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
+            MyRobotBit.Rotate(Turn.Left, 15, 90)
             Motor_Stop()
         } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
             Loop = false
-            MyRobotBit.Rotate(Turn.Right, Slow_speed, Read_ms)
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
+            MyRobotBit.Rotate(Turn.Right, 15, 90)
             Motor_Stop()
         } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
             Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) < Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) < Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) < Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) < Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) < Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) < Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) < Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) > Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) < Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) > Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
-            Motor_Stop()
-        } else if (MySensor.analogRead(MySensor.analogPort.P0) > Read_P0 && MySensor.analogRead(MySensor.analogPort.P1) < Read_P1 && (MySensor.analogRead(MySensor.analogPort.P2) > Read_P2 && MySensor.analogRead(MySensor.analogPort.P3) < Read_P3)) {
-            Loop = false
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
-            basic.pause(Line_follow_ms)
             Motor_Stop()
         }
     }
     Motor_Stop()
 }
-function Go_Start () {
-    MyRobotBit.MotorON(motorSEL.M12, motorDIR.Forward, Speed)
-    basic.pause(600)
+function Follow () {
+    MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
+    basic.pause(Follow_ms)
+    Motor_Stop()
+}
+function Left () {
+    MyRobotBit.Rotate(Turn.Left, Speed, Turn_left_ms)
+    Motor_Stop()
+}
+function Go_Startobstacle () {
+    MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
+    basic.pause(1200)
 }
 function Points_2 () {
-    Turn_Right()
+    Line_right()
+    Go_30_CM()
+    Right()
     Line_Reverse()
     Line_Follow()
-    Turn_Right()
-    Line_Reverse()
+    Reverse()
+    Right()
+    Line_left()
+    Line_point()
+}
+function Line_box () {
     Line_Follow()
+    Servo_kick()
     Uturn()
     Line_Reverse()
 }
-function Turn_Right () {
-    MyRobotBit.Rotate(Turn.Right, Slow_speed, Turn_ms)
-    Motor_Stop()
-}
 function Servo_kick () {
-    MyServo.ServoRun(Servo.Servo11, 42)
+    MyServo.ServoRun(Servo.Servo11, 56)
     basic.pause(800)
-    MyServo.ServoRun(Servo.Servo11, 112)
-    basic.pause(300)
+    MyServo.ServoRun(Servo.Servo11, 104)
+    basic.pause(200)
     MyServo.ServoStop(Servo.Servo11)
+    MyRobotBit.MotorAB(motorDIR.Reverse, Motir_A, Motor_B)
+    basic.pause(120)
+    Motor_Stop()
 }
 input.onButtonPressed(Button.A, function () {
     for (let index = 0; index < 4; index++) {
@@ -137,99 +102,104 @@ input.onButtonPressed(Button.A, function () {
     }
 })
 function Go_to_wins () {
-    MyRobotBit.MotorON(motorSEL.M12, motorDIR.Forward, Speed)
-    basic.pause(500)
+    MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
+    basic.pause(550)
     Motor_Stop()
 }
 function Uturn () {
-    MyRobotBit.Rotate(Turn.Right, Slow_speed, Uturn_ms)
+    MyRobotBit.Rotate(Turn.Right, Speed, Uturn_ms)
+    Motor_Stop()
 }
 function Motor_Stop () {
     MyRobotBit.motorOFF(motorSEL.M12, StopMode.Brake)
     basic.pause(100)
 }
+function Line_left () {
+    Line_Follow()
+    Reverse()
+    Left()
+    Line_Reverse()
+}
 function Read () {
-    Read_P0 = 557
-    Read_P1 = 252
-    Read_P2 = 261
-    Read_P3 = 568
-    Read_P4 = 378
-    Read_P10 = 265
+    Read_P0 = 522
+    Read_P1 = 174
+    Read_P2 = 182
+    Read_P3 = 540
+    Read_P4 = 370
+    Read_P10 = 330
+}
+function Line_right () {
+    Line_Follow()
+    Reverse()
+    Right()
+    Line_Reverse()
 }
 function Go_15_CM () {
-    MyRobotBit.MotorON(motorSEL.M12, motorDIR.Forward, Speed)
-    basic.pause(500)
+    MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
+    basic.pause(Go_15_ms)
     Motor_Stop()
 }
 function Go_30_CM () {
-    MyRobotBit.MotorON(motorSEL.M12, motorDIR.Forward, Speed)
-    basic.pause(1000)
+    MyRobotBit.MotorAB(motorDIR.Forward, Motir_A, Motor_B)
+    basic.pause(Go_30_ms)
+    Motor_Stop()
+}
+function Reverse () {
+    MyRobotBit.MotorAB(motorDIR.Reverse, Motir_A, Motor_B)
+    basic.pause(Revese_ms)
     Motor_Stop()
 }
 function Box4 () {
-    Uturn()
-    Line_Reverse()
+    Right()
     Line_Follow()
-    Servo_kick()
+    Go_Startobstacle()
+    Line_Follow()
+    Reverse()
+    Right()
+    Line_box()
 }
 input.onButtonPressed(Button.B, function () {
-    basic.pause(1000)
+    basic.pause(500)
     Box1()
     Box2()
-    Box3()
-    Box4()
     Points_1()
+    Box3()
     Points_2()
+    Box4()
     Back_to_start()
     Go_to_wins()
 })
 function Points_1 () {
-    Uturn()
-    Line_Reverse()
     Go_15_CM()
-    Turn_Right()
+    Left()
     Line_Reverse()
-    Line_Follow()
-    Turn_Right()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Uturn()
-    Line_Reverse()
+    Line_point()
 }
 function Box3 () {
-    Uturn()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Uturn()
-    Line_Reverse()
-    Go_30_CM()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Right()
-    Line_Reverse()
-    Line_Follow()
-    Servo_kick()
+    Line_left()
+    Line_left()
+    Line_box()
 }
-function Turn_Left () {
-    MyRobotBit.Rotate(Turn.Left, Slow_speed, Turn_ms)
+function Right () {
+    MyRobotBit.Rotate(Turn.Right, Speed, Turn_right_ms)
     Motor_Stop()
+}
+function Line_point () {
+    Line_Follow()
+    Uturn()
+    Line_Reverse()
+    Follow()
 }
 function Line_Reverse () {
     Loop = true
     Read()
     while (Loop) {
         if (MySensor.analogRead(MySensor.analogPort.P4) > Read_P4 && MySensor.analogRead(MySensor.analogPort.P10) > Read_P10) {
-            MyRobotBit.MotorON(motorSEL.M12, motorDIR.Reverse, Slow_speed)
+            MyRobotBit.MotorAB(motorDIR.Reverse, Motir_A, Motor_B)
         } else if (MySensor.analogRead(MySensor.analogPort.P4) < Read_P4 && MySensor.analogRead(MySensor.analogPort.P10) > Read_P10) {
-            MyRobotBit.Rotate(Turn.Right, Speed_read, Read_ms)
+            MyRobotBit.Rotate(Turn.Right, 10, 29)
         } else if (MySensor.analogRead(MySensor.analogPort.P4) > Read_P4 && MySensor.analogRead(MySensor.analogPort.P10) < Read_P10) {
-            MyRobotBit.Rotate(Turn.Left, Speed_read, Read_ms)
+            MyRobotBit.Rotate(Turn.Left, 10, 29)
         } else if (MySensor.analogRead(MySensor.analogPort.P4) < Read_P4 && MySensor.analogRead(MySensor.analogPort.P10) < Read_P10) {
             Loop = false
             Motor_Stop()
@@ -238,43 +208,31 @@ function Line_Reverse () {
     Motor_Stop()
 }
 function Box2 () {
-    Uturn()
-    Line_Reverse()
     Go_15_CM()
-    Turn_Right()
+    Right()
     Line_Reverse()
     Line_Follow()
-    Go_30_CM()
-    Line_Follow()
-    Turn_Right()
-    Line_Follow()
-    Turn_Right()
+    Reverse()
+    Left()
+    Go_15_CM()
+    Right()
     Line_Reverse()
     Line_Follow()
-    Servo_kick()
+    Reverse()
+    Right()
+    Line_box()
 }
 function Back_to_start () {
-    Line_Follow()
-    Turn_Left()
+    Go_15_CM()
+    Left()
     Line_Reverse()
     Go_30_CM()
-    Turn_Left()
-    Line_Follow()
-    Go_30_CM()
-    Line_Follow()
-    Turn_Right()
-    Line_Follow()
-    Turn_Right()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
-    Line_Follow()
-    Turn_Left()
-    Line_Reverse()
+    Left()
+    Line_right()
+    Line_right()
+    Line_left()
+    Line_left()
+    Line_left()
     Line_Follow()
 }
 let Read_P10 = 0
@@ -284,18 +242,26 @@ let Read_P2 = 0
 let Read_P1 = 0
 let Read_P0 = 0
 let Loop = false
-let Read_ms = 0
-let Line_follow_ms = 0
+let Go_15_ms = 0
+let Go_30_ms = 0
 let Uturn_ms = 0
-let Turn_ms = 0
-let Speed_read = 0
+let Turn_right_ms = 0
+let Turn_left_ms = 0
+let Revese_ms = 0
+let Follow_ms = 0
 let Slow_speed = 0
 let Speed = 0
+let Motor_B = 0
+let Motir_A = 0
 led.enable(false)
+Motir_A = 50
+Motor_B = 50
 Speed = 50
-Slow_speed = 30
-Speed_read = 15
-Turn_ms = 510
-Uturn_ms = 940
-Line_follow_ms = 340
-Read_ms = 50
+Slow_speed = 40
+Follow_ms = 200
+Revese_ms = 270
+Turn_left_ms = 330
+Turn_right_ms = 320
+Uturn_ms = 620
+Go_30_ms = 950
+Go_15_ms = 650
